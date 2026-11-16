@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+@theme {
+  --color-background: #0a0a0a;
+  --color-surface: #101011;
+  --color-elevated: #161618;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-line-strong: rgb(255 255 255 / 0.16);
+  --color-foreground: #ffffff;
+  --color-muted: #a1a1aa;
+  --color-subtle: #8a8a93;
+  --color-accent: #3b7bff;
+  --color-accent-soft: #7aa5ff;
+  --color-success: #4ade80;
+  --color-danger: #fca5a5;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-rise: rise 0.9s var(--ease-out-expo) both;
+  --animate-focus-in: focus-in 0.9s var(--ease-out-expo) both;
+  --animate-rise-soft: rise-soft 1.2s var(--ease-out-expo) both;
+  --animate-flow-x: flow-x 3.2s linear infinite;
+  --animate-flow-y: flow-y 3.2s linear infinite;
+  --animate-node: node-active 8s ease-in-out infinite;
+  --animate-blink: blink 1.4s steps(2, start) infinite;
+  --animate-glow: glow 9s ease-in-out infinite alternate;
+
+  /* Entrée du hero : translation + flou, façon Linear. */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  /*
+   * Titre du hero : il est peint dès la première image (flou, puis net) au
+   * lieu de partir d'une opacité nulle. Le navigateur le retient ainsi comme
+   * plus grand élément visible (LCP) sans attendre la fin de l'animation.
+   */
+  @keyframes focus-in {
+    from {
+      opacity: 0.4;
+      transform: translateY(10px);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes rise-soft {
+    from {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Impulsion qui parcourt un connecteur du workflow. */
+  @keyframes flow-x {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes flow-y {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  /* Chaque nœud s'allume à tour de rôle (décalé par animation-delay). */
+  @keyframes node-active {
+    0%,
+    30%,
+    100% {
+      opacity: 0;
+    }
+    6%,
+    20% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes blink {
+    to {
+      visibility: hidden;
+    }
+  }
+
+  @keyframes glow {
+    from {
+      opacity: 0.55;
+      scale: 1;
+    }
+    to {
+      opacity: 0.9;
+      scale: 1.08;
+    }
+  }
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-background);
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgb(59 123 255 / 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-soft);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ─── Composants & effets ───────────────────────────────────────────────── */
+@layer components {
+  /*
+   * Titre en dégradé blanc → gris, signature des interfaces Linear/Vercel.
+   * Réalisé avec un masque plutôt qu'avec `background-clip: text` + couleur
+   * transparente : le texte reste réellement peint en blanc, donc
+   * sélectionnable, lisible en mode contrasté et pris en compte dans le LCP.
+   */
+  .text-gradient {
+    color: #fff;
+    -webkit-mask-image: linear-gradient(180deg, #000 30%, rgb(0 0 0 / 0.62) 100%);
+    mask-image: linear-gradient(180deg, #000 30%, rgb(0 0 0 / 0.62) 100%);
+  }
+
+  /* Grille technique estompée par un masque radial. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  /* Halo bleu discret derrière le hero. */
+  .hero-glow {
+    background: radial-gradient(
+      closest-side,
+      rgb(59 123 255 / 0.22),
+      rgb(59 123 255 / 0.06) 55%,
+      transparent
+    );
+  }
+
+  /* Carte dont le reflet suit le pointeur (voir SpotlightCard). */
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      480px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+      rgb(59 123 255 / 0.11),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before,
+  .spotlight:focus-within::before {
+    opacity: 1;
+  }
+
+  /* Liseré lumineux en haut des panneaux. */
+  .edge-highlight {
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 0.22) 50%,
+      transparent
+    );
+  }
+
+  /* Contenu des pages légales. */
+  .prose-legal h2 {
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-foreground);
+  }
+
+  .prose-legal p,
+  .prose-legal li {
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+
+  .prose-legal p + p,
+  .prose-legal ul + p {
+    margin-top: 0.9rem;
+  }
+
+  .prose-legal ul {
+    margin-top: 0.75rem;
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  .prose-legal li + li {
+    margin-top: 0.35rem;
+  }
+
+  .prose-legal a {
+    color: var(--color-accent-soft);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-legal strong {
+    color: var(--color-foreground);
+    font-weight: 500;
+  }
+}
+
+/* ─── Accessibilité : mouvement réduit ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
