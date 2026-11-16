@@ -23,7 +23,7 @@ export function Services() {
           <Reveal as="li" key={service.id} delay={(index % 2) * 0.1}>
             <SpotlightCard className="h-full">
               <article className="flex h-full flex-col p-6 sm:p-8">
-                <span className="flex size-11 items-center justify-center rounded-xl border border-line bg-white/[0.04] text-accent-soft">
+                <span className="flex size-11 items-center justify-center rounded-xl border border-white/80 bg-accent/10 text-accent-soft">
                   <service.icon className="size-5" aria-hidden />
                 </span>
                 <h3 className="mt-6 text-xl font-semibold tracking-tight text-foreground">

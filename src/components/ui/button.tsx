@@ -8,15 +8,15 @@ type Size = "sm" | "md" | "lg";
 
 const base =
   "group/button relative inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium " +
-  "transition-[background-color,border-color,color,transform,box-shadow] duration-200 ease-out " +
+  "transition-[background-color,border-color,color,transform,box-shadow,filter] duration-200 ease-out " +
   "active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-white text-black shadow-[0_0_0_1px_rgb(255_255_255/0.9),0_8px_30px_-8px_rgb(59_123_255/0.55)] hover:bg-zinc-200",
+    "cta-primary hover:-translate-y-0.5",
   secondary:
-    "border border-line-strong bg-white/[0.03] text-foreground hover:border-white/30 hover:bg-white/[0.07]",
-  ghost: "text-muted hover:bg-white/[0.06] hover:text-foreground",
+    "border border-white/80 bg-white/55 text-foreground shadow-[0_6px_20px_-10px_rgb(60_50_150/0.35)] backdrop-blur-md hover:bg-white/85",
+  ghost: "text-muted hover:bg-white/70 hover:text-foreground",
 };
 
 const sizes: Record<Size, string> = {

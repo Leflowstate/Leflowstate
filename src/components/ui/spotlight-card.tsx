@@ -20,7 +20,7 @@ export function SpotlightCard({ className, children, ...props }: ComponentPropsW
     <div
       onPointerMove={handlePointerMove}
       className={cn(
-        "spotlight relative overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 hover:border-line-strong",
+        "spotlight glass relative overflow-hidden rounded-3xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1",
         className,
       )}
       {...props}

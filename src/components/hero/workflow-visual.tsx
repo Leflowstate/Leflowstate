@@ -37,7 +37,7 @@ export function WorkflowVisual({ className }: { className?: string }) {
       role="img"
       aria-label="Aperçu d'une automatisation : une facture en retard est détectée dans Bexio, l'IA rédige la relance, l'e-mail est envoyé par Gmail et le suivi est mis à jour dans Google Sheets."
       className={cn(
-        "relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-line-strong bg-surface text-left shadow-[0_40px_120px_-30px_rgb(59_123_255/0.35)]",
+        "relative mx-auto max-w-5xl overflow-hidden glass rounded-3xl text-left shadow-[0_50px_120px_-40px_rgb(91_78_240/0.45)]",
         className,
       )}
     >
@@ -46,9 +46,9 @@ export function WorkflowVisual({ className }: { className?: string }) {
       {/* Barre de fenêtre */}
       <div className="flex items-center justify-between border-b border-line px-4 py-3">
         <div className="flex items-center gap-1.5" aria-hidden>
-          <span className="size-2.5 rounded-full bg-white/15" />
-          <span className="size-2.5 rounded-full bg-white/15" />
-          <span className="size-2.5 rounded-full bg-white/15" />
+          <span className="size-2.5 rounded-full bg-foreground/15" />
+          <span className="size-2.5 rounded-full bg-foreground/15" />
+          <span className="size-2.5 rounded-full bg-foreground/15" />
         </div>
         <p className="font-mono text-xs text-subtle">relance-factures.workflow</p>
         <p className="inline-flex items-center gap-1.5 rounded-full border border-success/25 bg-success/10 px-2 py-0.5 text-[0.7rem] font-medium text-success">
@@ -69,11 +69,11 @@ export function WorkflowVisual({ className }: { className?: string }) {
                 key={workflow.name}
                 className={cn(
                   "flex items-center gap-2.5 rounded-lg px-2 py-2 text-sm",
-                  workflow.active ? "bg-white/[0.06] text-foreground" : "text-muted",
+                  workflow.active ? "bg-white/80 text-foreground shadow-[0_4px_12px_-6px_rgb(60_50_150/0.3)]" : "text-muted",
                 )}
               >
                 <span
-                  className={cn("size-1.5 rounded-full", workflow.active ? "bg-accent" : "bg-white/25")}
+                  className={cn("size-1.5 rounded-full", workflow.active ? "bg-accent" : "bg-foreground/25")}
                   aria-hidden
                 />
                 {workflow.name}
@@ -91,17 +91,17 @@ export function WorkflowVisual({ className }: { className?: string }) {
           <div className="flex flex-col lg:flex-row lg:items-stretch">
             {nodes.map((node, index) => (
               <div key={node.title} className="contents">
-                <div className="relative flex-1 rounded-xl border border-line bg-elevated p-3.5">
+                <div className="relative flex-1 rounded-xl border border-white/90 bg-elevated p-3.5 shadow-[0_8px_20px_-12px_rgb(60_50_150/0.35)]">
                   {/* Anneau lumineux : chaque nœud s'active à tour de rôle */}
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute -inset-px animate-node rounded-xl border border-accent/80 opacity-0 shadow-[0_0_28px_-6px_rgb(59_123_255/0.8)]",
+                      "absolute -inset-px animate-node rounded-xl border border-accent/80 opacity-0 shadow-[0_0_28px_-6px_rgb(91_78_240/0.7)]",
                       node.delay,
                     )}
                   />
                   <div className="flex items-center gap-3 lg:flex-col lg:items-start">
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-line bg-white/[0.04] text-accent-soft">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-white/80 bg-accent/10 text-accent-soft">
                       <node.icon className="size-4" aria-hidden />
                     </span>
                     <div className="min-w-0">
@@ -129,7 +129,7 @@ export function WorkflowVisual({ className }: { className?: string }) {
           </div>
 
           {/* Journal d'exécution */}
-          <div className="mt-5 hidden rounded-xl border border-line bg-background/70 p-4 sm:block">
+          <div className="mt-5 hidden rounded-xl border border-white/80 bg-white/50 p-4 sm:block">
             <div className="flex items-center justify-between">
               <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-subtle">
                 Journal d&apos;exécution

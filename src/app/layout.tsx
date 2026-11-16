@@ -54,8 +54,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
-  colorScheme: "dark",
+  themeColor: "#f6f5fc",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -76,10 +76,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body className="min-h-dvh overflow-x-clip">
         <a
           href="#contenu"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-black"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-foreground focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"
         >
           Aller au contenu
         </a>
+        {/* Dégradé « mesh » fixe derrière toute la page. */}
+        <div aria-hidden className="mesh-bg" />
         <MotionProvider nonce={nonce}>
           <Header />
           <main id="contenu" tabIndex={-1} className="outline-none">

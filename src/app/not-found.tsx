@@ -11,7 +11,6 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <section className="relative isolate flex min-h-[80dvh] items-center overflow-hidden py-32">
-      <div aria-hidden className="bg-grid absolute inset-0 -z-10" />
       <Container className="text-center">
         <p className="font-mono text-sm text-accent-soft">Erreur 404</p>
         <h1 className="text-gradient mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">

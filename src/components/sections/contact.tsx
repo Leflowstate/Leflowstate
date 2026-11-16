@@ -94,7 +94,7 @@ export function Contact() {
         </div>
 
         <Reveal delay={0.1} className="relative">
-          <div className="relative rounded-3xl border border-line-strong bg-surface p-6 sm:p-9">
+          <div className="glass glass-strong relative rounded-3xl p-6 sm:p-9">
             <div aria-hidden className="edge-highlight absolute inset-x-12 top-0 h-px" />
             <ContactForm token={token} />
           </div>

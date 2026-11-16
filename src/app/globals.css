@@ -2,18 +2,19 @@
 
 /* ─── Design tokens ─────────────────────────────────────────────────────── */
 @theme {
-  --color-background: #0a0a0a;
-  --color-surface: #101011;
-  --color-elevated: #161618;
-  --color-line: rgb(255 255 255 / 0.08);
-  --color-line-strong: rgb(255 255 255 / 0.16);
-  --color-foreground: #ffffff;
-  --color-muted: #a1a1aa;
-  --color-subtle: #8a8a93;
-  --color-accent: #3b7bff;
-  --color-accent-soft: #7aa5ff;
-  --color-success: #4ade80;
-  --color-danger: #fca5a5;
+  /* Thème clair « verre dépoli » : fond lavande très pâle, encre indigo. */
+  --color-background: #f6f5fc;
+  --color-surface: rgb(255 255 255 / 0.62);
+  --color-elevated: rgb(255 255 255 / 0.82);
+  --color-line: rgb(38 33 92 / 0.1);
+  --color-line-strong: rgb(38 33 92 / 0.18);
+  --color-foreground: #17153a;
+  --color-muted: #4a4868;
+  --color-subtle: #625f82;
+  --color-accent: #5b4ef0;
+  --color-accent-soft: #4f3fe0;
+  --color-success: #15803d;
+  --color-danger: #b91c1c;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
@@ -28,6 +29,8 @@
   --animate-node: node-active 8s ease-in-out infinite;
   --animate-blink: blink 1.4s steps(2, start) infinite;
   --animate-glow: glow 9s ease-in-out infinite alternate;
+  --animate-drift-a: drift-a 22s ease-in-out infinite alternate;
+  --animate-drift-b: drift-b 28s ease-in-out infinite alternate;
 
   /* Entrée du hero : translation + flou, façon Linear. */
   @keyframes rise {
@@ -110,6 +113,25 @@
     }
   }
 
+  /* Dérive lente des taches de couleur du hero (transform seul : fluide). */
+  @keyframes drift-a {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(6%, 8%, 0) scale(1.12);
+    }
+  }
+
+  @keyframes drift-b {
+    from {
+      transform: translate3d(0, 0, 0) scale(1.08);
+    }
+    to {
+      transform: translate3d(-8%, -5%, 0) scale(1);
+    }
+  }
+
   @keyframes glow {
     from {
       opacity: 0.55;
@@ -125,7 +147,7 @@
 /* ─── Base ──────────────────────────────────────────────────────────────── */
 @layer base {
   html {
-    color-scheme: dark;
+    color-scheme: light;
     background-color: var(--color-background);
     scroll-padding-top: 5.5rem;
     -webkit-text-size-adjust: 100%;
@@ -138,8 +160,11 @@
     }
   }
 
+  /*
+   * Pas de fond sur <body> : la couleur est portée par <html>, ce qui laisse
+   * voir le dégradé « mesh » fixe (.mesh-bg) placé derrière tout le contenu.
+   */
   body {
-    background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -147,8 +172,8 @@
   }
 
   ::selection {
-    background-color: rgb(59 123 255 / 0.35);
-    color: #fff;
+    background-color: rgb(91 78 240 / 0.22);
+    color: var(--color-foreground);
   }
 
   :focus-visible {
@@ -171,34 +196,111 @@
 /* ─── Composants & effets ───────────────────────────────────────────────── */
 @layer components {
   /*
-   * Titre en dégradé blanc → gris, signature des interfaces Linear/Vercel.
+   * Fond « mesh gradient » : quelques taches de couleur organiques, très
+   * diffuses, fixées derrière toute la page. Uniquement des dégradés CSS
+   * (pas de filtre de flou, pas d'image) : aucun coût au défilement.
+   */
+  .mesh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -20;
+    pointer-events: none;
+    background-color: var(--color-background);
+    background-image:
+      radial-gradient(60% 55% at 8% 4%, rgb(167 190 255 / 0.6), transparent 70%),
+      radial-gradient(48% 50% at 96% 10%, rgb(214 190 255 / 0.55), transparent 70%),
+      radial-gradient(50% 45% at 88% 92%, rgb(255 206 190 / 0.5), transparent 70%),
+      radial-gradient(52% 50% at 4% 96%, rgb(170 232 222 / 0.45), transparent 70%);
+  }
+
+  /* Taches animées du hero, posées par-dessus le fond fixe. */
+  .mesh-blob {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .mesh-blob-blue {
+    background: radial-gradient(closest-side, rgb(120 150 255 / 0.5), transparent);
+  }
+
+  .mesh-blob-violet {
+    background: radial-gradient(closest-side, rgb(196 150 255 / 0.42), transparent);
+  }
+
+  .mesh-blob-peach {
+    background: radial-gradient(closest-side, rgb(255 186 160 / 0.45), transparent);
+  }
+
+  /*
+   * Verre dépoli : panneau blanc translucide, flou d'arrière-plan, liseré
+   * blanc et ombre douce teintée. Utilisé pour toutes les cartes.
+   */
+  .glass {
+    background-color: var(--color-surface);
+    border: 1px solid rgb(255 255 255 / 0.75);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.9) inset,
+      0 20px 50px -24px rgb(60 50 150 / 0.28),
+      0 2px 6px -2px rgb(60 50 150 / 0.08);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+  }
+
+  .glass-strong {
+    background-color: var(--color-elevated);
+  }
+
+  /* Sans flou d'arrière-plan disponible, on opacifie pour rester lisible. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+      background-color: rgb(255 255 255 / 0.92);
+    }
+  }
+
+  /*
+   * Titre : encre indigo qui s'éclaircit légèrement vers le bas.
    * Réalisé avec un masque plutôt qu'avec `background-clip: text` + couleur
-   * transparente : le texte reste réellement peint en blanc, donc
-   * sélectionnable, lisible en mode contrasté et pris en compte dans le LCP.
+   * transparente : le texte reste réellement peint, donc sélectionnable,
+   * lisible en mode contrasté et pris en compte dans le LCP.
    */
   .text-gradient {
+    color: var(--color-foreground);
+    -webkit-mask-image: linear-gradient(180deg, #000 40%, rgb(0 0 0 / 0.78) 100%);
+    mask-image: linear-gradient(180deg, #000 40%, rgb(0 0 0 / 0.78) 100%);
+  }
+
+  /*
+   * Bouton d'action principal : seul élément plein et saturé de la page,
+   * pour que l'œil le trouve immédiatement sur le fond clair.
+   */
+  .cta-primary {
     color: #fff;
-    -webkit-mask-image: linear-gradient(180deg, #000 30%, rgb(0 0 0 / 0.62) 100%);
-    mask-image: linear-gradient(180deg, #000 30%, rgb(0 0 0 / 0.62) 100%);
+    background-image: linear-gradient(135deg, #4a3fe6 0%, #6d3ff0 55%, #8b46f2 100%);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.28) inset,
+      0 10px 28px -8px rgb(91 78 240 / 0.65),
+      0 2px 6px -1px rgb(60 40 180 / 0.35);
   }
 
-  /* Grille technique estompée par un masque radial. */
-  .bg-grid {
+  .cta-primary:hover {
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.28) inset,
+      0 16px 36px -8px rgb(91 78 240 / 0.75),
+      0 3px 8px -1px rgb(60 40 180 / 0.4);
+    filter: brightness(1.07);
+  }
+
+  /* Bandeau d'appel à l'action : le bloc le plus coloré du site. */
+  .cta-panel {
+    background-color: #4a3fe6;
     background-image:
-      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
-  }
-
-  /* Halo bleu discret derrière le hero. */
-  .hero-glow {
-    background: radial-gradient(
-      closest-side,
-      rgb(59 123 255 / 0.22),
-      rgb(59 123 255 / 0.06) 55%,
-      transparent
-    );
+      radial-gradient(60% 90% at 0% 0%, rgb(96 140 255 / 0.95), transparent 65%),
+      radial-gradient(55% 90% at 100% 0%, rgb(168 85 247 / 0.9), transparent 65%),
+      radial-gradient(60% 80% at 85% 110%, rgb(255 140 130 / 0.7), transparent 65%),
+      radial-gradient(60% 80% at 10% 110%, rgb(60 50 200 / 0.9), transparent 65%);
+    box-shadow: 0 30px 70px -30px rgb(74 63 230 / 0.6);
   }
 
   /* Carte dont le reflet suit le pointeur (voir SpotlightCard). */
@@ -208,8 +310,8 @@
     inset: 0;
     border-radius: inherit;
     background: radial-gradient(
-      480px circle at var(--spot-x, 50%) var(--spot-y, 0%),
-      rgb(59 123 255 / 0.11),
+      420px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+      rgb(255 255 255 / 0.75),
       transparent 60%
     );
     opacity: 0;
@@ -224,12 +326,7 @@
 
   /* Liseré lumineux en haut des panneaux. */
   .edge-highlight {
-    background-image: linear-gradient(
-      90deg,
-      transparent,
-      rgb(255 255 255 / 0.22) 50%,
-      transparent
-    );
+    background-image: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.95) 50%, transparent);
   }
 
   /* Contenu des pages légales. */

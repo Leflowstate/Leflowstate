@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 const controlClass =
-  "w-full rounded-xl border bg-background/70 px-4 text-[0.95rem] text-foreground placeholder:text-subtle/70 " +
+  "w-full rounded-xl border bg-white/80 px-4 text-[0.95rem] text-foreground placeholder:text-subtle/70 " +
   "transition-[border-color,box-shadow] duration-200 " +
   "focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15";
 

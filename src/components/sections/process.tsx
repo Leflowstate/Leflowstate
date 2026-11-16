@@ -5,7 +5,7 @@ import { processSteps } from "@/content/process";
 
 export function Process() {
   return (
-    <Section id="methode" className="border-y border-line bg-surface/40">
+    <Section id="methode" className="border-y border-white/60 bg-white/30">
       <SectionHeading
         sectionId="methode"
         eyebrow="Comment ça fonctionne"
@@ -33,7 +33,7 @@ export function Process() {
                 />
               ) : null}
 
-              <div className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-line-strong bg-background font-mono text-sm text-accent-soft">
+              <div className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border border-white bg-white font-mono text-sm text-accent-soft shadow-[0_6px_16px_-8px_rgb(60_50_150/0.45)]">
                 <span aria-hidden>{String(index + 1).padStart(2, "0")}</span>
               </div>
 
@@ -46,7 +46,7 @@ export function Process() {
                   {step.title}
                 </h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-muted">{step.description}</p>
-                <p className="mt-4 inline-flex rounded-full border border-line bg-white/[0.03] px-3 py-1 text-xs text-muted">
+                <p className="mt-4 inline-flex rounded-full border border-white/80 bg-white/60 px-3 py-1 text-xs text-muted">
                   {step.deliverable}
                 </p>
               </div>

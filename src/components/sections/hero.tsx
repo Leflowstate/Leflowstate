@@ -19,14 +19,15 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="relative isolate overflow-hidden pb-20 pt-32 sm:pb-24 sm:pt-40 lg:pt-44"
     >
-      <div aria-hidden className="bg-grid absolute inset-0 -z-10" />
-      <div
-        aria-hidden
-        className="hero-glow absolute left-1/2 top-[-22rem] -z-10 h-[46rem] w-[72rem] -translate-x-1/2 animate-glow"
-      />
+      {/* Taches de couleur organiques, en dérive lente. */}
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <div className="mesh-blob mesh-blob-blue left-[-12%] top-[-18%] size-[34rem] animate-drift-a sm:size-[46rem]" />
+        <div className="mesh-blob mesh-blob-violet right-[-14%] top-[2%] size-[30rem] animate-drift-b sm:size-[42rem]" />
+        <div className="mesh-blob mesh-blob-peach bottom-[4%] left-[22%] size-[26rem] animate-drift-b sm:size-[38rem]" />
+      </div>
 
       <Container className="text-center">
-        <p className="inline-flex animate-rise items-center gap-2 rounded-full border border-line bg-white/[0.03] px-3.5 py-1.5 text-xs text-muted backdrop-blur sm:text-sm">
+        <p className="inline-flex animate-rise items-center gap-2 rounded-full border border-white/80 bg-white/55 px-3.5 py-1.5 text-xs text-muted shadow-[0_6px_20px_-10px_rgb(60_50_150/0.35)] backdrop-blur-md sm:text-sm">
           <span className="relative flex size-1.5" aria-hidden>
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
             <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
@@ -47,7 +48,7 @@ export function Hero() {
         </p>
 
         <div className="mt-9 flex animate-rise flex-col items-center justify-center gap-3 [animation-delay:280ms] sm:flex-row">
-          <ButtonLink href={CONTACT_HREF} size="lg" className="w-full sm:w-auto">
+          <ButtonLink href={CONTACT_HREF} size="lg" className="h-14 w-full px-8 text-base sm:w-auto">
             Réserver une démonstration
             <ArrowRight
               className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5"

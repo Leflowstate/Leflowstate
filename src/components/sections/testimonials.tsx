@@ -23,7 +23,7 @@ export function Testimonials() {
       />
 
       {TESTIMONIALS_ARE_DEMO ? (
-        <Reveal className="mx-auto mt-6 flex max-w-xl items-start justify-center gap-2.5 rounded-xl border border-line bg-white/[0.03] px-4 py-3 text-sm text-muted">
+        <Reveal className="mx-auto mt-6 flex max-w-xl items-start justify-center gap-2.5 rounded-xl border border-white/80 bg-white/55 px-4 py-3 text-sm text-muted">
           <Info className="mt-0.5 size-4 shrink-0 text-accent-soft" aria-hidden />
           <p>
             Les témoignages ci-dessous sont des <strong className="font-medium text-foreground">exemples de démonstration</strong>,
@@ -35,7 +35,7 @@ export function Testimonials() {
       <ul className="mt-12 grid gap-5 lg:grid-cols-3">
         {testimonials.map((testimonial, index) => (
           <Reveal as="li" key={testimonial.name} delay={index * 0.1}>
-            <figure className="flex h-full flex-col rounded-2xl border border-line bg-surface p-7">
+            <figure className="glass flex h-full flex-col rounded-3xl p-7">
               {TESTIMONIALS_ARE_DEMO ? (
                 <p className="mb-5 inline-flex self-start rounded-full border border-accent/30 bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent-soft">
                   Exemple de démonstration
@@ -47,7 +47,7 @@ export function Testimonials() {
               <figcaption className="mt-7 flex items-center gap-3 border-t border-line pt-5">
                 <span
                   aria-hidden
-                  className="flex size-10 items-center justify-center rounded-full border border-line bg-white/[0.05] text-sm font-medium text-muted"
+                  className="flex size-10 items-center justify-center rounded-full border border-white/80 bg-accent/10 text-sm font-medium text-muted"
                 >
                   {initials(testimonial.name)}
                 </span>

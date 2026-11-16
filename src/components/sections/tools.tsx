@@ -5,7 +5,7 @@ import { tools } from "@/content/services";
 /** Bandeau des outils compatibles — noms en texte, sans logos tiers. */
 export function Tools() {
   return (
-    <section aria-labelledby="outils-title" className="border-y border-line bg-surface/40 py-10">
+    <section aria-labelledby="outils-title" className="border-y border-white/60 bg-white/30 py-10">
       <Container>
         <Reveal>
           <h2 id="outils-title" className="text-center text-sm text-subtle">

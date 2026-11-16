@@ -10,15 +10,22 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden="true"
       className={cn("size-7", className)}
     >
-      <rect width="32" height="32" rx="8" fill="#fff" />
+      <defs>
+        <linearGradient id="logo-mesh" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#4a6cf7" />
+          <stop offset="0.6" stopColor="#6d3ff0" />
+          <stop offset="1" stopColor="#a855f7" />
+        </linearGradient>
+      </defs>
+      <rect width="32" height="32" rx="9" fill="url(#logo-mesh)" />
       <path
         d="M10 21.5c5 0 3.5-11 12-11"
-        stroke="#0a0a0a"
+        stroke="#fff"
         strokeWidth="2.4"
         strokeLinecap="round"
       />
-      <circle cx="10" cy="21.5" r="3.1" fill="#0a0a0a" />
-      <circle cx="22" cy="10.5" r="3.1" fill="#3b7bff" />
+      <circle cx="10" cy="21.5" r="3.1" fill="#fff" />
+      <circle cx="22" cy="10.5" r="3.1" fill="#ffd0c2" />
     </svg>
   );
 }

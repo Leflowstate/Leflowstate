@@ -9,7 +9,7 @@ import { CONTACT_HREF } from "@/content/navigation";
 
 export function Faq() {
   return (
-    <Section id="faq" className="border-t border-line bg-surface/40">
+    <Section id="faq" className="border-t border-white/60 bg-white/30">
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div>
           <SectionHeading

@@ -49,9 +49,9 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300",
+        "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter,box-shadow] duration-300",
         isScrolled || isMenuOpen
-          ? "border-line bg-background/80 backdrop-blur-xl"
+          ? "border-white/70 bg-white/60 shadow-[0_8px_30px_-18px_rgb(60_50_150/0.35)] backdrop-blur-xl backdrop-saturate-150"
           : "border-transparent bg-transparent",
       )}
     >
@@ -71,7 +71,7 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-full px-3.5 py-2 text-sm text-muted transition-colors hover:bg-white/[0.06] hover:text-foreground"
+                  className="rounded-full px-3.5 py-2 text-sm text-muted transition-colors hover:bg-white/70 hover:text-foreground"
                 >
                   {item.label}
                 </Link>
@@ -81,12 +81,14 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ButtonLink href={CONTACT_HREF} size="sm" className="hidden sm:inline-flex">
-            Réserver une démonstration
+          {/* Toujours visible, y compris sur mobile (libellé court). */}
+          <ButtonLink href={CONTACT_HREF} size="sm" onClick={() => setIsMenuOpen(false)}>
+            <span className="sm:hidden">Démo</span>
+            <span className="hidden sm:inline">Réserver une démonstration</span>
           </ButtonLink>
           <button
             type="button"
-            className="inline-flex size-10 items-center justify-center rounded-full border border-line text-foreground transition-colors hover:bg-white/[0.06] lg:hidden"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-white/80 bg-white/55 text-foreground transition-colors hover:bg-white/85 lg:hidden"
             aria-expanded={isMenuOpen}
             aria-controls="menu-mobile"
             aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
@@ -101,7 +103,7 @@ export function Header() {
         {isMenuOpen ? (
           <m.div
             id="menu-mobile"
-            className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-background lg:hidden"
+            className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-background/95 lg:hidden"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}

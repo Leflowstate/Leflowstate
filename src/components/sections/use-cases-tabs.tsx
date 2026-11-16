@@ -70,8 +70,8 @@ export function UseCasesTabs() {
               className={cn(
                 "inline-flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-colors duration-200",
                 isActive
-                  ? "border-white/25 bg-white text-black"
-                  : "border-line bg-white/[0.03] text-muted hover:border-line-strong hover:text-foreground",
+                  ? "border-transparent bg-foreground text-white shadow-[0_8px_20px_-8px_rgb(23_21_58/0.6)]"
+                  : "border-white/80 bg-white/55 text-muted backdrop-blur-md hover:bg-white/85 hover:text-foreground",
               )}
             >
               <useCase.icon className="size-4" aria-hidden />
@@ -86,7 +86,7 @@ export function UseCasesTabs() {
         id={PANEL_ID}
         aria-labelledby={tabId(active.id)}
         tabIndex={0}
-        className="mt-8 overflow-hidden rounded-2xl border border-line bg-surface"
+        className="glass mt-8 overflow-hidden rounded-3xl"
       >
         <AnimatePresence mode="wait" initial={false}>
           <m.div

@@ -50,7 +50,7 @@ export function CookieBanner() {
           role="dialog"
           aria-modal="false"
           aria-labelledby={titleId}
-          className="fixed inset-x-3 bottom-3 z-[60] rounded-2xl border border-line-strong bg-elevated/95 p-4 shadow-[0_24px_80px_-12px_rgb(0_0_0/0.9)] backdrop-blur-xl sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[26rem] sm:p-5"
+          className="fixed inset-x-3 bottom-3 z-[60] glass glass-strong rounded-2xl p-4 shadow-[0_24px_70px_-16px_rgb(40_30_120/0.45)] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[26rem] sm:p-5"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
@@ -71,7 +71,7 @@ export function CookieBanner() {
           </p>
 
           {showDetails ? (
-            <fieldset className="mt-4 space-y-3 rounded-xl border border-line bg-background/60 p-4">
+            <fieldset className="mt-4 space-y-3 rounded-xl border border-white/80 bg-white/60 p-4">
               <legend className="sr-only">Préférences de cookies</legend>
               <label className="flex items-start gap-3 text-sm">
                 <input
